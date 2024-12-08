@@ -1,70 +1,13 @@
 # Hangman
 import random
 
+from hangman_drawings import stages
+from word_list import word_list
+
 lives = 6
-
-stages = [r'''
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |
-      |
-=========
-''', r'''
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |
-      |
-=========
-''', r'''
-  +---+
-  |   |
-  O   |
- /|\  |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|   |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
-  |   |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-      |
-      |
-      |
-      |
-=========
-''']
-
-word_list = ["Banana", "Phone", "Computer"]
 
 chosen_word = random.choice(word_list)
 chosen_word = chosen_word.lower()
-print(chosen_word)
 
 placeholder = ""
 word_length = len(chosen_word)
@@ -76,10 +19,15 @@ print(placeholder)
 
 game_over = False
 correct_letters = []
+used_letters = []
 
 while not game_over:
 
+    unique_used_letters = list(set(used_letters))
+    print(unique_used_letters)
+
     guess = input("Guess a letter: ").lower()
+    used_letters.append(guess)
 
     display = ""
 
@@ -98,6 +46,8 @@ while not game_over:
         if lives == 0:
             game_over = True
             print("You lose!")
+            print(f"The word you failed to guess was: {chosen_word}")
+
         print(f"The letter is not in the word. You have {lives} tries left.")
         print(stages[lives])
     else:
